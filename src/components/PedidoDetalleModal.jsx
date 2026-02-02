@@ -47,6 +47,11 @@ export default function PedidoDetalleModal({ pedido, onClose }) {
           <Typography>
             <strong>Monto:</strong> ${pedido.monto}
           </Typography>
+
+            <Typography>
+            <strong>Multa: </strong> ${pedido.multa ? `${pedido.multa}` : "No aplica"}
+          </Typography>
+
         </Stack>
       </DialogContent>
 

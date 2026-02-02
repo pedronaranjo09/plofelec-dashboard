@@ -6,15 +6,12 @@ export default function StatsCards({ pedidos }) {
   // =====================
   // CALCULOS DE ESTADOS
   // =====================
-  const pendientes = pedidos.filter(p => p.estado === "Pendiente").length;
-  const enProceso = pedidos.filter(p => p.estado === "En proceso").length;
-  const entregados = pedidos.filter(p => p.estado === "Entregado").length;
+  const pendientes = pedidos.filter((p) => p.estado === "Pendiente").length;
+  const enProceso = pedidos.filter((p) => p.estado === "En Proceso").length;
+  const entregados = pedidos.filter((p) => p.estado === "Entregado").length;
 
-  // Suma las multas de todos los pedidos de manera segura
-  const conMulta = pedidos.reduce((acc, p) => {
-    const multaNum = Number(p.multa) || 0; // asegura que sea número
-    return acc + multaNum;
-  }, 0);
+  // Multas de todos los pedidos
+  const multas = pedidos.reduce((acc, p) => acc + (Number(p.multa) || 0), 0);
 
   // =====================
   // RENDER
@@ -28,22 +25,25 @@ export default function StatsCards({ pedidos }) {
             <Typography variant="h4">{pendientes}</Typography>
           </Card>
         </Grid>
+
         <Grid item xs={6} sm={3}>
           <Card sx={{ p: 2, textAlign: "center" }}>
             <Typography variant="h6">En proceso</Typography>
             <Typography variant="h4">{enProceso}</Typography>
           </Card>
         </Grid>
+
         <Grid item xs={6} sm={3}>
           <Card sx={{ p: 2, textAlign: "center" }}>
             <Typography variant="h6">Entregados</Typography>
             <Typography variant="h4">{entregados}</Typography>
           </Card>
         </Grid>
+
         <Grid item xs={6} sm={3}>
           <Card sx={{ p: 2, textAlign: "center" }}>
             <Typography variant="h6">Multas ($)</Typography>
-            <Typography variant="h4">{conMulta}</Typography>
+            <Typography variant="h4">{multas}</Typography>
           </Card>
         </Grid>
       </Grid>
