@@ -1,68 +1,47 @@
-import { Grid, Card, CardContent, Typography } from "@mui/material";
+// src/components/StatsCards.jsx
+import React from "react";
+import { Box, Card, Typography, Grid } from "@mui/material";
 
-export default function StatsCards({ pedidos = [] }) {
+export default function StatsCards({ pedidos }) {
   // =====================
-  // MÉTRICAS
+  // CALCULOS DE ESTADOS
   // =====================
-  const totalPedidos = pedidos.length;
-
-  const entregados = pedidos.filter(
-    (p) => p.estado === "Entregado"
-  ).length;
-
-  const enProceso = pedidos.filter(
-    (p) => p.estado === "En Proceso"
-  ).length;
-
-  const retrasados = pedidos.filter(
-    (p) => p.estado === "Retrasado"
-  ).length;
-
-  // Multas: $200 por pedido retrasado
-  const totalMultas = retrasados * 200;
+  const pendientes = pedidos.filter(p => p.estado === "Pendiente").length;
+  const enProceso = pedidos.filter(p => p.estado === "En proceso").length;
+  const entregados = pedidos.filter(p => p.estado === "Entregado").length;
+  const conMulta = pedidos.reduce((acc, p) => acc + (p.multa || 0), 0);
 
   // =====================
   // RENDER
   // =====================
   return (
-    <Grid container spacing={2} mb={3}>
-      <Grid item xs={12} md={3}>
-        <Card>
-          <CardContent>
-            <Typography variant="subtitle2">Total pedidos</Typography>
-            <Typography variant="h5">{totalPedidos}</Typography>
-          </CardContent>
-        </Card>
+    <Box mb={3}>
+      <Grid container spacing={2}>
+        <Grid item xs={6} sm={3}>
+          <Card sx={{ p: 2, textAlign: "center" }}>
+            <Typography variant="h6">Pendientes</Typography>
+            <Typography variant="h4">{pendientes}</Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Card sx={{ p: 2, textAlign: "center" }}>
+            <Typography variant="h6">En proceso</Typography>
+            <Typography variant="h4">{enProceso}</Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Card sx={{ p: 2, textAlign: "center" }}>
+            <Typography variant="h6">Entregados</Typography>
+            <Typography variant="h4">{entregados}</Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Card sx={{ p: 2, textAlign: "center" }}>
+            <Typography variant="h6">Multas ($)</Typography>
+            <Typography variant="h4">{conMulta}</Typography>
+          </Card>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12} md={3}>
-        <Card>
-          <CardContent>
-            <Typography variant="subtitle2">En proceso</Typography>
-            <Typography variant="h5">{enProceso}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <Card>
-          <CardContent>
-            <Typography variant="subtitle2">Retrasados</Typography>
-            <Typography variant="h5">{retrasados}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <Card>
-          <CardContent>
-            <Typography variant="subtitle2">Multas estimadas</Typography>
-            <Typography variant="h5">
-              ${totalMultas.toLocaleString()}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
+    </Box>
   );
 }
