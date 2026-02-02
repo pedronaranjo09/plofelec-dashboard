@@ -9,7 +9,12 @@ export default function StatsCards({ pedidos }) {
   const pendientes = pedidos.filter(p => p.estado === "Pendiente").length;
   const enProceso = pedidos.filter(p => p.estado === "En proceso").length;
   const entregados = pedidos.filter(p => p.estado === "Entregado").length;
-  const conMulta = pedidos.reduce((acc, p) => acc + (p.multa || 0), 0);
+
+  // Suma las multas de todos los pedidos de manera segura
+  const conMulta = pedidos.reduce((acc, p) => {
+    const multaNum = Number(p.multa) || 0; // asegura que sea número
+    return acc + multaNum;
+  }, 0);
 
   // =====================
   // RENDER
