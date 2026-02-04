@@ -51,8 +51,8 @@ const PedidosTable = ({ pedidos = [], onVerDetalle }) => {
         <TableHead>
           <TableRow>
             <TableCell><strong>ID</strong></TableCell>
-            <TableCell><strong>Producto</strong></TableCell>
-            <TableCell><strong>Proveedor</strong></TableCell>
+            <TableCell><strong>Acto</strong></TableCell>
+            <TableCell><strong>Entidad</strong></TableCell>
             <TableCell><strong>Estado</strong></TableCell>
             <TableCell><strong>Días de retraso</strong></TableCell>
             <TableCell><strong>Factura</strong></TableCell>
